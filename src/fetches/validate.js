@@ -1,12 +1,8 @@
-const validate = (endpoint, params = null) => {
+const axios = require('axios');
 
-  var response = {
-    data: [],
-    errors: null
-  };
+const validate = async (endpoint, params = null, setter = null) => {
 
   const buildQueryString = () => {
-    console.log(params);
     let kvps = Object.entries(params);
     let queryString = "";
 
@@ -23,22 +19,16 @@ const validate = (endpoint, params = null) => {
     return queryString;
   }
 
-  fetch(`${endpoint}`, {
-    method: 'GET',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
+  async function getValidation() {
+    try {
+      const response = await axios.get(`${endpoint}${buildQueryString()}`);
+      setter(response.data);
+    } catch (err) {
+      console.log(err);
     }
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch(err => {
-      console.log('Failure:', err);
-    })
+  }
 
-  return response;
+  await getValidation();
 }
 
 export default validate;
