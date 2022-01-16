@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import { Formik, Form } from 'formik';
-import FormInput from './components/FormInput';
-import SubmitButton from './components/SubmitButton';
 import validate from './fetches/validate';
 import { CheckIcon, XIcon } from '@heroicons/react/outline';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  NavLink,
+  useLocation
+} from 'react-router-dom';
+import formSchema from './validationSchema/formSchema';
+import DynamicForm from './components/DynamicForm';
 
 const App = () => {
 
@@ -11,6 +17,8 @@ const App = () => {
   const [issuesOpen, setIssuesOpen] = useState(false);
 
   const toggleIssuesOpen = () => setIssuesOpen(!issuesOpen);
+
+  const location = useLocation;
 
   return (
     <div className="App flex flex-col">
@@ -26,23 +34,20 @@ const App = () => {
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0 px-4">
-        <Formik
-          initialValues={{ name: '', age: '' }}
-          onSubmit={(values) => {
-            validate(process.env.REACT_APP_VALIDATOR_API_URL || 'http://localhost:7071/api/HelloWorld?', values, setIssues);
-          }}
-          onChange={(values) => {
-            validate(process.env.REACT_APP_VALIDATOR_API_URL || 'http://localhost:7071/api/HelloWorld?', values, setIssues);
-          }}
-        >
-          {() => (
-            <Form className="flex flex-col w-full md:w-1/2 space-y-2 self-center">
-              <FormInput htmlFor="name" type="text" name="name" title="Name" />
-              <FormInput htmlFor="age" type="text" name="age" title="Age" />
-              <SubmitButton title="Validate" />
-            </Form>
-          )}
-        </Formik>
+        <Router>
+          <div className="flex flex-col space-y-4 w-full md:w-1/2">
+            <div className="flex space-x-4">
+              {formSchema.sections.map((s, i) => (
+                <NavLink className="font-semibold hover:text-gray-500 active:text-gray-500" key={i} to={`/${s.name}`}>{s.name}</NavLink>
+              ))}
+            </div>
+            <Routes>
+              {formSchema.sections.map((s, i) => (
+                <Route path={`/${s.name}`} key={i} element={<DynamicForm key={i} location={location} formSchema={s.fields} />} />
+              ))}
+            </Routes>
+          </div>
+        </Router>
         {issuesOpen && (
           <div className="w-full md:w-1/2 border-2 p-2 flex flex-col rounded">
             <div className="flex items-center justify-between text-lg font-bold border-b-2">
