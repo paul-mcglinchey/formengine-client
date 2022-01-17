@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Dashboard from './components/Dashboard';
-import { FormView, FormBase } from './components/Forms';
+import { FormView, FormBase, FormCreate } from './components/Forms';
 import { NavBar } from './components/Nav';
 
 const App = () => {
@@ -32,6 +32,7 @@ const App = () => {
           </Route>
           <Route path="/forms/*" element={<FormView />} />
           <Route path="/forms/:id/*" element={<FormBase />} />
+          <Route path="/createform" element={<FormCreate />} />
         </Routes>
       </div>
     </div >

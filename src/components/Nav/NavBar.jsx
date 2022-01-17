@@ -9,8 +9,9 @@ const NavBar = ({ issues, toggleIssuesOpen }) => {
     <div className="flex justify-between border-b-2 border-green-500 mb-6 px-2 sm:px-6 lg:px-8 py-1 items-center">
       <div className="flex items-end space-x-8">
         <NavLink to="/" className="text-4xl font-bold tracking-wide">Validator</NavLink>
-        <div>
+        <div className="flex space-x-4">
           <NavigationLink route="/forms" title="Forms" />
+          <NavigationLink route="/createform" title="Create a form" />
         </div>
       </div>
       <div className="bg-gray-200 px-2 rounded">

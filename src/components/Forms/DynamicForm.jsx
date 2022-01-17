@@ -24,13 +24,15 @@ const DynamicForm = props => {
     for (var key of Object.keys(formSchema)) {
       _formData[key] = "";
 
-      if (formSchema[key].type === "text") {
+      console.log(formSchema[key].fieldType);
+      if (formSchema[key].fieldType === "text") {
         _validationSchema[key] = Yup.string();
-      } else if (formSchema[key].type === "integer") {
+      } else if (formSchema[key].fieldType === "integer") {
         _validationSchema[key] = Yup.number().typeError("Value must be a number").integer("Value must be an integer");
       }
 
       if (formSchema[key].required) {
+        console.log(_validationSchema);
         _validationSchema[key] = _validationSchema[key].required('Required');
       }
     }
@@ -42,11 +44,11 @@ const DynamicForm = props => {
   const getFormElement = (elementName, elementSchema) => {
     const props = {
       name: elementName,
-      label: elementSchema.label,
+      label: elementSchema.fieldLabel,
       options: elementSchema.options
     };
 
-    if (elementSchema.type === "text" || elementSchema.type === "integer") {
+    if (elementSchema.fieldType === "text" || elementSchema.fieldType === "integer") {
       return <TextField {...props} />
     }
   }

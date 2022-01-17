@@ -25,13 +25,13 @@ const FormBase = props => {
             <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0 px-4">
               <div className="flex flex-col space-y-4 w-full md:w-1/2">
                 <div className="flex space-x-4">
-                  {formSchema.sections.map((s, i) => (
-                    <NavLink className="font-semibold hover:text-gray-500 active:text-gray-500" key={i} to={`${s.name}`}>{s.name}</NavLink>
+                  {response.data.sections.map((s, i) => (
+                    <NavLink className="font-semibold hover:text-gray-500 hover:bg-gray-800 active:text-gray-500 bg-gray-200 px-2 rounded py-1" key={i} to={`${s.sectionName}`}>{s.sectionName}</NavLink>
                   ))}
                 </div>
                 <Routes>
-                  {formSchema.sections.map((s, i) => (
-                    <Route path={`${s.name}`} key={i} element={<DynamicForm key={i} formSchema={s.fields} />} />
+                  {response.data.sections.map((s, i) => (
+                    <Route path={`${s.sectionName}`} key={i} element={<DynamicForm key={i} formSchema={s.fields} />} />
                   ))}
                 </Routes>
               </div>
