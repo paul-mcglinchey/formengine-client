@@ -8,7 +8,8 @@ module.exports = {
   variants: {
     extend: {
       textColor: ['active'],
-      backgroundColor: ['active']
+      backgroundColor: ['active'],
+      rotate: ['transition']
     }
   },
   plugins: [],

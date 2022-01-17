@@ -1,18 +1,29 @@
 import { Fragment } from "react";
+import { Transition } from '@headlessui/react';
+import { ArrowNarrowRightIcon } from "@heroicons/react/outline";
 
 const ValidationIssues = ({ issuesOpen, issues, toggleIssuesOpen }) => {
 
   return (
     <Fragment>
-      {issuesOpen && (
-        <div className="w-full md:w-1/2 border-2 p-2 flex flex-col rounded">
-          <div className="flex items-center justify-between text-lg font-bold border-b-2">
-            <div>
-              Validation issues
+      <Transition
+        show={issuesOpen}
+        as={Fragment}
+        enter="transition ease-out duration-150"
+        enterFrom="transform translate-x-full"
+        enterTo="transform translate-x-0"
+        leave="transition ease-in duration-150"
+        leaveFrom="transform translate-x-0"
+        leaveTo="transform translate-x-full"
+      >
+        <div id="validation-issues" className="flex flex-col top-0 right-0 absolute bg-neutral-900 w-1/2 h-screen py-4 px-2 shadow-lg">
+          <div className="border-b-2 mb-4">
+            <div className="flex items-bottom mb-4 justify-between">
+              <span className="text-4xl font-bold">Validation issues</span>
+              <button className="self-end" onClick={() => toggleIssuesOpen()}>
+                <ArrowNarrowRightIcon className={`h-8 w-8 transform transition-all ${issuesOpen ? 'rotate-0' : 'rotate-180'}`} />
+              </button>
             </div>
-            <button onClick={() => toggleIssuesOpen()}>
-              <XIcon className="w-5 h-5 text-red-500" />
-            </button>
           </div>
           <div>
             {issues && Array.isArray(issues) && issues.length > 0 ? (
@@ -22,11 +33,11 @@ const ValidationIssues = ({ issuesOpen, issues, toggleIssuesOpen }) => {
                 })}
               </div>
             ) : (
-              <span className="text-sm font-semibold text-gray-500">No validation issues found</span>
+              <span className="text-md font-semibold text-gray-200">No validation issues found</span>
             )}
           </div>
         </div>
-      )}
+      </Transition>
     </Fragment>
   )
 }

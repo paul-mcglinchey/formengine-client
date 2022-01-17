@@ -8,6 +8,7 @@ import {
 import Dashboard from './components/Dashboard';
 import { FormView, FormBase, FormCreate } from './components/Forms';
 import { NavBar } from './components/Nav';
+import { ValidationIssues } from './components/ValidationPanel';
 
 const App = () => {
 
@@ -16,9 +17,26 @@ const App = () => {
 
   const toggleIssuesOpen = () => setIssuesOpen(!issuesOpen);
 
+  document.addEventListener("click", evt => {
+    const flyoutElement = document.getElementById("validation-issues");
+    let targetElement = evt.target;
+
+    if (targetElement === flyoutElement) {
+      console.log('clicked inside');
+      return;
+    }
+
+    issuesOpen && setIssuesOpen(false);
+  })
+
   return (
     <div>
       <NavBar issues={issues} toggleIssuesOpen={toggleIssuesOpen} />
+      <ValidationIssues 
+        issuesOpen={issuesOpen}
+        issues={issues}
+        toggleIssuesOpen={toggleIssuesOpen}
+      />
       <div className="font-sans subpixel-antialiased px-2 sm:px-6 lg:px-8">
         <Routes>
           <Route
