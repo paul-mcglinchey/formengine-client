@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Routes,
   Route,
@@ -17,22 +17,16 @@ const App = () => {
 
   const toggleIssuesOpen = () => setIssuesOpen(!issuesOpen);
 
-  document.addEventListener("click", evt => {
-    const flyoutElement = document.getElementById("validation-issues");
-    let targetElement = evt.target;
-
-    if (targetElement === flyoutElement) {
-      console.log('clicked inside');
-      return;
+  document.onclick = function (e) {
+    if (e.target.id !== "validation-issues") {
+      issuesOpen && setIssuesOpen(false);
     }
-
-    issuesOpen && setIssuesOpen(false);
-  })
+  }
 
   return (
     <div>
       <NavBar issues={issues} toggleIssuesOpen={toggleIssuesOpen} />
-      <ValidationIssues 
+      <ValidationIssues
         issuesOpen={issuesOpen}
         issues={issues}
         toggleIssuesOpen={toggleIssuesOpen}

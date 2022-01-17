@@ -15,8 +15,8 @@ const NavBar = ({ issues, toggleIssuesOpen }) => {
           <NavigationLink route="/createform" title="Create a form" />
         </div>
       </div>
-      <div id="valiation-issues" className="hover:bg-zinc-800 px-2 rounded self-end">
-        <button onClick={() => toggleIssuesOpen()} className="font-semibold tracking-wide text-lg flex items-center">
+      <div className="hover:bg-zinc-800 px-2 rounded self-end">
+        <button id="validation-issues" onClick={() => toggleIssuesOpen()} className="font-semibold tracking-wide text-lg flex items-center">
           {issues && Array.isArray(issues) ? issues.length : 0} validation issues
           {(!issues || !Array.isArray(issues)) && (
             <CheckIcon className="ml-2 text-green-500 w-6 h-6" />
