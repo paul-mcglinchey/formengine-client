@@ -16,10 +16,50 @@ export const Form = props => {
   )
 }
 
-export const TextField = props => {
+export const TitleField = props => {
   const { name, label, placeholder, ...rest } = props;
   return (
     <div className="flex flex-col">
+      <Field 
+        className="border-0 bg-transparent focus:outline-none text-xl font-bold tracking-wide flex-1"
+        type="text"
+        name={name}
+        id={name}
+        placeholder={label || name}
+        {...rest}
+      />
+      <ErrorMessage 
+        name={name}
+        render={msg => <div className="text-red-400 text-sm font-bold uppercase">{msg}</div>}
+      />
+    </div>
+  )
+}
+
+export const SubTitleField = props => {
+  const { name, label, placeholder, ...rest } = props;
+  return (
+    <div className="flex flex-col">
+      <Field 
+        className="border-0 bg-transparent focus:outline-none text-lg font-bold flex-1"
+        type="text"
+        name={name}
+        id={name}
+        placeholder={placeholder || ""}
+        {...rest}
+      />
+      <ErrorMessage 
+        name={name}
+        render={msg => <div className="text-red-400 text-sm font-bold uppercase">{msg}</div>}
+      />
+    </div>
+  )
+}
+
+export const TextField = props => {
+  const { name, label, placeholder, ...rest } = props;
+  return (
+    <div className="flex flex-col flex-1 space-y-2">
       {label && (
         <label className="text-xs text-gray-600 uppercase tracking-wider font-bold" htmlFor={name}>{label}</label>
       )}
@@ -28,12 +68,12 @@ export const TextField = props => {
         type="text"
         name={name}
         id={name}
-        placeholder={placeholder || ""}
+        placeholder={label ? label : name}
         {...rest}
       />
       <ErrorMessage
         name={name}
-        render={msg => <div className="text-red-400 text-sm font-bold uppercase">{msg}</div>}
+        render={msg => <div className="text-red-400 text-sm font-bold uppercase"></div>}
       />
     </div>
   )
@@ -42,23 +82,25 @@ export const TextField = props => {
 export const SelectField = props => {
   const { name, label, options } = props;
   return (
-    <>
-      {label && <label for={name}>{label}</label>}
+    <div className="flex flex-col flex-1 space-y-2">
+      {label && (
+        <label className="text-xs text-gray-600 uppercase tracking-wider font-bold" htmlFor={name}>{label}</label>
+      )}
       <Field
+        className="border border-gray-500 rounded-sm px-2 py-1 font-semibold text-gray-500"
         as="select"
         id={name}
         name={name}
       >
-        <option value="" >Choose...</option>
         {options.map((o, i) => (
-          <option key={i} value={o.value} label={o.label || o.value} />
+          <option key={i} value={o.value} label={o.label || o.value} className="font-medium tracking-wide" />
         ))}
       </Field>
       <ErrorMessage
         name={name}
         render={msg => <div className="text-red-500" >{msg}</div>}
       />
-    </>
+    </div>
   )
 }
 

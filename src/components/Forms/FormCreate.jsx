@@ -1,28 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
+import { Formik, Form, Field } from "formik"
+import { TextField, SelectField } from './FormElements';
+import formCreationSchema from '../../validationSchema/formCreationSchema';
+import { MinusSmIcon, PlusSmIcon } from '@heroicons/react/outline';
+import { DynamicForm } from '.';
 
-const FormCreate = props => {
-
-  const [formData, setFormData] = useState({
-    formName: "",
-    sections: [{
-      sectionName: "",
-      fields: {
-        fieldName: "",
-        fieldType: "",
-        fieldLabel: "",
-        required: false
-      }
-    }]
-  })
+export const FormCreate = props => {
 
   return (
     <div>
-      <div className="flex">
-        <span className="text-lg font-semibold">Create a form</span>
-      </div>
-      <div>
-
-      </div>
+      <DynamicForm formSchema={formCreationSchema} />
     </div>
   )
 }
